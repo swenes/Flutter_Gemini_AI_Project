@@ -1,101 +1,50 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'dart:io';
-
-import 'package:err_detector_project/widgets/assistant_widget.dart';
-import 'package:err_detector_project/widgets/border_container.dart';
-import 'package:err_detector_project/widgets/selected_image_widget.dart';
+import 'package:camera/camera.dart';
+import 'package:err_detector_project/controller/scan_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:get/get.dart';
 
-class OcrPage extends StatefulWidget {
-  const OcrPage({super.key});
+class OcrPage2 extends StatefulWidget {
+  const OcrPage2({super.key});
 
   @override
-  State<OcrPage> createState() => _OcrPageState();
+  State<OcrPage2> createState() => _OcrPage2State();
 }
 
-class _OcrPageState extends State<OcrPage> {
-  File? selectedMedia;
-
+class _OcrPage2State extends State<OcrPage2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Nesne Tanıma",
-            style:
-                TextStyle(fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500)),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const AssistantWidget(
-              imagePath: 'assets/images/object.jpg',
-            ),
-            const BorderContainer(
-              text: 'Bilgi sahibi olmak istediğin nesnenin fotoğrafını yükle.',
-              fontSize: 18,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            selectedImageWidget(selectedMedia),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.camera),
-                    title: const Text('Kamera'),
-                    onTap: () async {
-                      final media = await ImagePicker()
-                          .pickImage(source: ImageSource.camera);
-
-                      if (media != null) {
-                        var data = File(media.path);
-                        setState(() {
-                          selectedMedia = data;
-                        });
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.image),
-                    title: const Text('Galeri'),
-                    onTap: () async {
-                      final media = await ImagePicker()
-                          .pickImage(source: ImageSource.gallery);
-
-                      if (media != null) {
-                        var data = File(media.path);
-                        setState(() {
-                          selectedMedia = data;
-                        });
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                ],
-              );
-            },
-          );
+      body: GetBuilder<ScanController>(
+        init: ScanController(),
+        builder: (controller) {
+          return controller.isCameraInitialized.value
+              ? Stack(
+                  children: [
+                    CameraPreview(controller.cameraController),
+                    Positioned(
+                      top: (controller.y * 700),
+                      right: (controller.x * 500),
+                      child: Container(
+                        width: controller.w * 100 * context.width / 100,
+                        height: controller.h * 100 * context.width / 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.green, width: 4),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              color: Colors.white,
+                              child: Text(controller.label),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : const Center(child: Text('Loading Preview..'));
         },
       ),
     );
