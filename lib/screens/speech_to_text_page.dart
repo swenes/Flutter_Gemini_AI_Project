@@ -1,3 +1,4 @@
+import 'package:err_detector_project/screens/save_notes._page.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
@@ -166,52 +167,15 @@ class _SpeechToTextPageState extends State<SpeechToTextPage> {
             ),
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
+          IconButton(
+            icon: Icon(
+              _isListening ? Icons.stop : Icons.mic,
+              size: 30,
+            ),
             onPressed: _listen,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            ),
-            child: Text(
-              _isListening ? 'Dinleme Durdur' : 'Dinlemeye Başla',
-              style: const TextStyle(fontSize: 18),
-            ),
-          ),
+            tooltip: 'Dinlemeye Başla/Durdur',
+          )
         ],
-      ),
-    );
-  }
-}
-
-class SavedNotesPage extends StatelessWidget {
-  final List<Note> notes;
-
-  SavedNotesPage({required this.notes});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Kayıtlı Notlar'),
-      ),
-      body: ListView.builder(
-        itemCount: notes.length,
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 2,
-            margin: const EdgeInsets.all(8),
-            child: ListTile(
-              title: Text(notes[index].text),
-              subtitle: Text(
-                'Kaydedilen Tarih: ${notes[index].timestamp}',
-                style: const TextStyle(fontSize: 12),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

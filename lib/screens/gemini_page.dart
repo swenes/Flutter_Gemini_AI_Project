@@ -126,13 +126,13 @@ class _GeminiPageState extends State<GeminiPage> {
                 children: [
                   Container(
                     height: 120,
-                    width: 280,
+                    width: 220,
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.black, // Çizgi rengi
                         width: 0.2, // Çizgi kalınlığı
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(40),
                     ),
                     child: Image.asset(
                       'assets/images/chat.png', // İstediğiniz bir resmin yolunu ekleyin
@@ -143,7 +143,7 @@ class _GeminiPageState extends State<GeminiPage> {
                     'Başlamak için bir mesaj gönder!',
                     style: TextStyle(
                         fontFamily: 'Cera-Pro',
-                        fontSize: 15,
+                        fontSize: 13,
                         fontWeight: FontWeight.w500),
                   )
                 ],
