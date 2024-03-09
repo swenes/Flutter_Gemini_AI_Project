@@ -9,29 +9,34 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
         children: [
-          const ListTile(
-            title: Center(
-              child: Text(
-                'The VisualBrain',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 145, 102, 23),
-                  fontSize: 30,
-                  fontFamily: 'Cera-Pro',
-                  fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.bold,
+          Container(
+            padding: const EdgeInsets.only(top: 30),
+            color: Colors.black,
+            child: Column(
+              children: [
+                const Text(
+                  textAlign: TextAlign.center,
+                  'Visual Brain',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 212, 8, 8),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Cera-Pro',
+                      fontSize: 35),
                 ),
-              ),
+                Container(
+                  height: 200,
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "assets/images/logo.png",
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
-          ),
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/drawer2.png'),
-              ),
-            ),
-            child: SizedBox(),
           ),
           const ListTile(
             leading: Icon(Icons.person),

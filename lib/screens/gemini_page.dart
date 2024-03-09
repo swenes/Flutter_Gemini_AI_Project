@@ -94,62 +94,64 @@ class _GeminiPageState extends State<GeminiPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.parameter != null ? "Arçelik Destek" : "Gemini Chat Bot",
-          style: const TextStyle(
-              fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.parameter != null ? "Arçelik Destek" : "Gemini Chat Bot",
+            style: const TextStyle(
+                fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios_new),
+          ),
         ),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),
-      ),
-      body: Stack(
-        children: [
-          DashChat(
-              currentUser: mySelf,
-              typingUsers: typing,
-              onSend: (ChatMessage m) {
-                getData(m);
-              },
-              messages: allMessages),
-          if (allMessages
-              .isEmpty) // Eğer mesajlar listesi boşsa, bir dekorasyon göster
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 120,
-                    width: 220,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black, // Çizgi rengi
-                        width: 0.2, // Çizgi kalınlığı
+        body: Stack(
+          children: [
+            DashChat(
+                currentUser: mySelf,
+                typingUsers: typing,
+                onSend: (ChatMessage m) {
+                  getData(m);
+                },
+                messages: allMessages),
+            if (allMessages
+                .isEmpty) // Eğer mesajlar listesi boşsa, bir dekorasyon göster
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 120,
+                      width: 220,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black, // Çizgi rengi
+                          width: 0.2, // Çizgi kalınlığı
+                        ),
+                        borderRadius: BorderRadius.circular(40),
                       ),
-                      borderRadius: BorderRadius.circular(40),
+                      child: Image.asset(
+                        'assets/images/chat.png', // İstediğiniz bir resmin yolunu ekleyin
+                      ),
                     ),
-                    child: Image.asset(
-                      'assets/images/chat.png', // İstediğiniz bir resmin yolunu ekleyin
-                    ),
-                  ),
-                  const SizedBox(height: 16), // Biraz boşluk ekleyelim
-                  const Text(
-                    'Başlamak için bir mesaj gönder!',
-                    style: TextStyle(
-                        fontFamily: 'Cera-Pro',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
-                  )
-                ],
+                    const SizedBox(height: 16), // Biraz boşluk ekleyelim
+                    const Text(
+                      'Başlamak için bir mesaj gönder!',
+                      style: TextStyle(
+                          fontFamily: 'Cera-Pro',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500),
+                    )
+                  ],
+                ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

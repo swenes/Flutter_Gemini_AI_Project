@@ -21,88 +21,91 @@ class _ErrDetectorPageState extends State<ErrDetectorPage> {
   static String? goToGeminiParameter;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("ERR Code Yakalama",
-            style:
-                TextStyle(fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500)),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios_new),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const AssistantWidget(
-              imagePath: 'assets/images/arcelik.png',
-            ),
-            const BorderContainer(
-              color: Constants.mainFontColor,
-              text: 'Merak ettiğin hata kodunu içeren fotoğrafı galerinden seç',
-              fontSize: 18,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            selectedImageWidget(selectedMedia),
-            extractedTextWidget(),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.camera),
-                    title: const Text('Kamera'),
-                    onTap: () async {
-                      final media = await ImagePicker()
-                          .pickImage(source: ImageSource.camera);
-
-                      if (media != null) {
-                        var data = File(media.path);
-                        setState(() {
-                          selectedMedia = data;
-                        });
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.image),
-                    title: const Text('Galeri'),
-                    onTap: () async {
-                      final media = await ImagePicker()
-                          .pickImage(source: ImageSource.gallery);
-
-                      if (media != null) {
-                        var data = File(media.path);
-                        setState(() {
-                          selectedMedia = data;
-                        });
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                ],
-              );
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("ERR Code Yakalama",
+              style: TextStyle(
+                  fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500)),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
             },
-          );
-        },
+            icon: const Icon(Icons.arrow_back_ios_new),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              const AssistantWidget(
+                imagePath: 'assets/images/arcelik.png',
+              ),
+              const BorderContainer(
+                color: Constants.mainFontColor,
+                text:
+                    'Merak ettiğin hata kodunu içeren fotoğrafı galerinden seç',
+                fontSize: 18,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              selectedImageWidget(selectedMedia),
+              extractedTextWidget(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.camera),
+                      title: const Text('Kamera'),
+                      onTap: () async {
+                        final media = await ImagePicker()
+                            .pickImage(source: ImageSource.camera);
+
+                        if (media != null) {
+                          var data = File(media.path);
+                          setState(() {
+                            selectedMedia = data;
+                          });
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.image),
+                      title: const Text('Galeri'),
+                      onTap: () async {
+                        final media = await ImagePicker()
+                            .pickImage(source: ImageSource.gallery);
+
+                        if (media != null) {
+                          var data = File(media.path);
+                          setState(() {
+                            selectedMedia = data;
+                          });
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

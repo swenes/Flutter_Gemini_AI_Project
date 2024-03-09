@@ -13,39 +13,41 @@ class OcrPage2 extends StatefulWidget {
 class _OcrPage2State extends State<OcrPage2> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GetBuilder<ScanController>(
-        init: ScanController(),
-        builder: (controller) {
-          return controller.isCameraInitialized.value
-              ? Stack(
-                  children: [
-                    CameraPreview(controller.cameraController),
-                    Positioned(
-                      top: (controller.y * 700),
-                      right: (controller.x * 500),
-                      child: Container(
-                        width: controller.w * 100 * context.width / 100,
-                        height: controller.h * 100 * context.width / 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.green, width: 4),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              color: Colors.white,
-                              child: Text(controller.label),
-                            ),
-                          ],
+    return SafeArea(
+      child: Scaffold(
+        body: GetBuilder<ScanController>(
+          init: ScanController(),
+          builder: (controller) {
+            return controller.isCameraInitialized.value
+                ? Stack(
+                    children: [
+                      CameraPreview(controller.cameraController),
+                      Positioned(
+                        top: (controller.y * 700),
+                        right: (controller.x * 500),
+                        child: Container(
+                          width: controller.w * 100 * context.width / 100,
+                          height: controller.h * 100 * context.width / 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.green, width: 4),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                color: Colors.white,
+                                child: Text(controller.label),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              : const Center(child: Text('Loading Preview..'));
-        },
+                    ],
+                  )
+                : const Center(child: Text('Loading Preview..'));
+          },
+        ),
       ),
     );
   }

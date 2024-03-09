@@ -122,60 +122,62 @@ class _SpeechToTextPageState extends State<SpeechToTextPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Hızlı Not Al',
-            style:
-                TextStyle(fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500)),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _showSaveNoteDialog,
-          ),
-          IconButton(
-            icon: const Icon(Icons.list),
-            onPressed: _navigateToSavedNotesPage,
-          ),
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          if (!_isListening && _text.isEmpty)
-            Container(
-              margin: const EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(width: 0.4, color: Colors.blueGrey),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Hızlı Not Al',
+              style: TextStyle(
+                  fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500)),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: _showSaveNoteDialog,
+            ),
+            IconButton(
+              icon: const Icon(Icons.list),
+              onPressed: _navigateToSavedNotesPage,
+            ),
+          ],
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            if (!_isListening && _text.isEmpty)
+              Container(
+                margin: const EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(width: 0.4, color: Colors.blueGrey),
+                ),
+                padding: const EdgeInsets.all(16.0),
+                child: const Text(
+                  'Sizi duyamadım. Sanırım henüz bir şey söylemediniz.',
+                  style: TextStyle(fontSize: 18.0),
+                  textAlign: TextAlign.center,
+                ),
               ),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 3000),
               padding: const EdgeInsets.all(16.0),
-              child: const Text(
-                'Sizi duyamadım. Sanırım henüz bir şey söylemediniz.',
-                style: TextStyle(fontSize: 18.0),
+              alignment: Alignment.center, // İçeriği ortalamak için
+              child: Text(
+                _text,
+                style: const TextStyle(fontSize: 18.0),
                 textAlign: TextAlign.center,
               ),
             ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            padding: const EdgeInsets.all(16.0),
-            alignment: Alignment.center, // İçeriği ortalamak için
-            child: Text(
-              _text,
-              style: const TextStyle(fontSize: 18.0),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 20),
-          IconButton(
-            icon: Icon(
-              _isListening ? Icons.stop : Icons.mic,
-              size: 30,
-            ),
-            onPressed: _listen,
-            tooltip: 'Dinlemeye Başla/Durdur',
-          )
-        ],
+            const SizedBox(height: 20),
+            IconButton(
+              icon: Icon(
+                _isListening ? Icons.stop : Icons.mic,
+                size: 30,
+              ),
+              onPressed: _listen,
+              tooltip: 'Dinlemeye Başla/Durdur',
+            )
+          ],
+        ),
       ),
     );
   }

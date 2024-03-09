@@ -11,81 +11,83 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Asistan",
-            style:
-                TextStyle(fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500)),
-        centerTitle: true,
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          );
-        }),
-      ),
-      drawer: const MyDrawer(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const AssistantWidget(
-              imagePath: 'assets/images/virtualAssistant.png',
-            ),
-            const BorderContainer(
-              color: Constants.mainFontColor,
-              fontSize: 22,
-              text: 'Merhaba, senin için ne yapabilirim?',
-            ),
-            const SuggestionTextWidget(
-              text: 'İşte senin için bir kaç öneri..',
-            ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Asistan",
+              style: TextStyle(
+                  fontFamily: 'Cera-Pro', fontWeight: FontWeight.w500)),
+          centerTitle: true,
+          leading: Builder(builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          }),
+        ),
+        drawer: const MyDrawer(),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              const AssistantWidget(
+                imagePath: 'assets/images/virtualAssistant.png',
+              ),
+              const BorderContainer(
+                color: Constants.mainFontColor,
+                fontSize: 22,
+                text: 'Merhaba, senin için ne yapabilirim?',
+              ),
+              const SuggestionTextWidget(
+                text: 'İşte senin için bir kaç öneri..',
+              ),
 
-            //features list
-            Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/errPage');
-                  },
-                  child: const FeatureBox(
-                      color: Constants.firstSuggestionBoxColor,
-                      headerText: Constants.firstBoxHeaderText,
-                      descriptionText: Constants.firstBoxText),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/ocrPage');
-                  },
-                  child: const FeatureBox(
-                      color: Constants.secondSuggestionBoxColor,
-                      headerText: Constants.secondBoxHeaderText,
-                      descriptionText: Constants.secondBoxText),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/geminiPage');
-                  },
-                  child: const FeatureBox(
-                      color: Constants.thirdSuggestionBoxColor,
-                      headerText: Constants.thirdBoxHeaderText,
-                      descriptionText: Constants.thirdBoxText),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/speechPage');
-                  },
-                  child: const FeatureBox(
-                      color: Constants.fourthSuggestionBoxColor,
-                      headerText: Constants.fourthBoxHeaderText,
-                      descriptionText: Constants.fourthtBoxText),
-                ),
-                const SizedBox(height: 20)
-              ],
-            )
-          ],
+              //features list
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/errPage');
+                    },
+                    child: const FeatureBox(
+                        color: Constants.firstSuggestionBoxColor,
+                        headerText: Constants.firstBoxHeaderText,
+                        descriptionText: Constants.firstBoxText),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/ocrPage');
+                    },
+                    child: const FeatureBox(
+                        color: Constants.secondSuggestionBoxColor,
+                        headerText: Constants.secondBoxHeaderText,
+                        descriptionText: Constants.secondBoxText),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/geminiPage');
+                    },
+                    child: const FeatureBox(
+                        color: Constants.thirdSuggestionBoxColor,
+                        headerText: Constants.thirdBoxHeaderText,
+                        descriptionText: Constants.thirdBoxText),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/speechPage');
+                    },
+                    child: const FeatureBox(
+                        color: Constants.fourthSuggestionBoxColor,
+                        headerText: Constants.fourthBoxHeaderText,
+                        descriptionText: Constants.fourthtBoxText),
+                  ),
+                  const SizedBox(height: 20)
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
