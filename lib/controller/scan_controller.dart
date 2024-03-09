@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:developer';
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:get/state_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -83,7 +86,7 @@ class ScanController extends GetxController {
       );
       detectorReady = true;
     } catch (e) {
-      print("Error in object detection: $e");
+      debugPrint("Error in object detection: $e");
     }
 
     if (detectorReady && detector != null && detector.isNotEmpty) {

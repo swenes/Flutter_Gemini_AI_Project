@@ -16,7 +16,7 @@
         </intent>
 </queries>
     <application
-        android:label="err_detector_project"
+        android:label="Visual Brain App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

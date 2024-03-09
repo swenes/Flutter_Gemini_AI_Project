@@ -11,8 +11,7 @@ import 'package:flutter/services.dart';
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-        statusBarColor: Colors.black,
-        statusBarIconBrightness: Brightness.light),
+        statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark),
   );
 
   runApp(const MyApp());
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/homePage': (context) => const HomePage(),
         '/errPage': (context) => const ErrDetectorPage(),
-        '/ocrPage': (context) => const OcrPage2(),
+        '/ocrPage': (context) => const OcrPage(),
         '/geminiPage': (context) => const GeminiPage(),
         '/speechPage': (context) => const SpeechToTextPage(),
       },
