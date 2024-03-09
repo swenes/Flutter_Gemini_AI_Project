@@ -42,6 +42,7 @@ class _ErrDetectorPageState extends State<ErrDetectorPage> {
               imagePath: 'assets/images/arcelik.png',
             ),
             const BorderContainer(
+              color: Constants.mainFontColor,
               text: 'Merak ettiğin hata kodunu içeren fotoğrafı galerinden seç',
               fontSize: 18,
             ),

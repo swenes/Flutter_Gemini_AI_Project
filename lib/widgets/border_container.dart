@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 class BorderContainer extends StatelessWidget {
   final String text;
   final double fontSize;
-  const BorderContainer({
-    super.key,
-    required this.text,
-    required this.fontSize,
-  });
+  final Color color;
+  const BorderContainer(
+      {super.key,
+      required this.text,
+      required this.fontSize,
+      required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,7 @@ class BorderContainer extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-              color: Constants.mainFontColor,
-              fontSize: fontSize,
-              fontFamily: 'Cera Pro'),
+              color: color, fontSize: fontSize, fontFamily: 'Cera Pro'),
         ),
       ),
     );

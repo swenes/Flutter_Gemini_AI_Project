@@ -35,6 +35,7 @@ class HomePage extends StatelessWidget {
               imagePath: 'assets/images/virtualAssistant.png',
             ),
             const BorderContainer(
+              color: Constants.mainFontColor,
               fontSize: 22,
               text: 'Merhaba, senin için ne yapabilirim?',
             ),

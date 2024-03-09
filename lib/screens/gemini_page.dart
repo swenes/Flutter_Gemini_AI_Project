@@ -143,7 +143,7 @@ class _GeminiPageState extends State<GeminiPage> {
                     'Başlamak için bir mesaj gönder!',
                     style: TextStyle(
                         fontFamily: 'Cera-Pro',
-                        fontSize: 13,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500),
                   )
                 ],
