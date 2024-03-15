@@ -1,5 +1,6 @@
 import 'package:err_detector_project/screens/login/utils/helpers/snackbar_helper.dart';
 import 'package:err_detector_project/screens/login/values/app_regex.dart';
+import 'package:err_detector_project/services/login_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -18,6 +19,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final UserService _userService = UserService();
+
   final _formKey = GlobalKey<FormState>();
 
   final ValueNotifier<bool> passwordNotifier = ValueNotifier(true);
@@ -55,6 +58,14 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     initializeControllers();
     super.initState();
+    void showAllUsersData() async {
+      final Map<String, String> allUsersData =
+          await _userService.getAllUsersData();
+      // allUsersData haritasını kullanarak kayıtlı kullanıcıların bilgilerine erişebilirsiniz
+      allUsersData.forEach((email, password) {
+        debugPrint('Email: $email, Password: $password');
+      });
+    }
   }
 
   @override
@@ -145,13 +156,33 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (_, isValid, __) {
                       return FilledButton(
                         onPressed: isValid
-                            ? () {
-                                SnackbarHelper.showSnackBar(
-                                  AppStrings.loggedIn,
+                            ? () async {
+                                bool isExisting =
+                                    await _userService.isUserExists(
+                                  emailController.text,
                                 );
-                                Navigator.pushNamed(context, '/homePage');
-                                emailController.clear();
-                                passwordController.clear();
+
+                                if (isExisting) {
+                                  bool isCorrect = await _userService.loginUser(
+                                      emailController.text,
+                                      passwordController.text);
+                                  if (isCorrect) {
+                                    SnackbarHelper.showSnackBar(
+                                      AppStrings.loggedIn,
+                                    );
+                                    Navigator.pushNamed(context, '/homePage');
+                                    emailController.clear();
+                                    passwordController.clear();
+                                  } else {
+                                    SnackbarHelper.showSnackBar(
+                                      AppStrings.notExisting,
+                                    );
+                                  }
+                                } else {
+                                  SnackbarHelper.showSnackBar(
+                                    AppStrings.notExisting,
+                                  );
+                                }
                               }
                             : null,
                         child: const Text(AppStrings.login),

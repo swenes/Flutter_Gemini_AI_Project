@@ -1,4 +1,5 @@
 import 'package:err_detector_project/screens/login/utils/helpers/snackbar_helper.dart';
+import 'package:err_detector_project/services/login_service.dart';
 import 'package:flutter/material.dart';
 import '../components/app_text_form_field.dart';
 import '../utils/common_widgets/gradient_background.dart';
@@ -15,6 +16,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final UserService _userService = UserService();
+
   final _formKey = GlobalKey<FormState>();
 
   late final TextEditingController nameController;
@@ -218,15 +221,29 @@ class _RegisterPageState extends State<RegisterPage> {
                     builder: (_, isValid, __) {
                       return FilledButton(
                         onPressed: isValid
-                            ? () {
-                                SnackbarHelper.showSnackBar(
-                                  AppStrings.registrationComplete,
+                            ? () async {
+                                bool isExist = await _userService.isUserExists(
+                                  emailController.text,
                                 );
-                                nameController.clear();
-                                emailController.clear();
-                                passwordController.clear();
-                                confirmPasswordController.clear();
-                                Navigator.pushNamed(context, '/loginPage');
+
+                                if (isExist) {
+                                  SnackbarHelper.showSnackBar(
+                                    AppStrings.userExist,
+                                  );
+                                } else {
+                                  _userService.registerUser(
+                                      emailController.text,
+                                      passwordController.text);
+                                  SnackbarHelper.showSnackBar(
+                                    AppStrings.registrationComplete,
+                                  );
+                                  nameController.clear();
+                                  emailController.clear();
+                                  passwordController.clear();
+                                  confirmPasswordController.clear();
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushNamed(context, '/loginPage');
+                                }
                               }
                             : null,
                         child: const Text(AppStrings.register),
