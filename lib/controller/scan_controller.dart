@@ -48,7 +48,7 @@ class ScanController extends GetxController {
       isCameraInitialized(true);
       update();
     } else {
-      print("Permission denied");
+      debugPrint("Permission denied");
     }
   }
 

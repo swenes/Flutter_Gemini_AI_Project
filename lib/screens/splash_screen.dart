@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     Timer(
       const Duration(seconds: 4),
       () {
-        Navigator.pushNamed(context, "/homePage");
+        Navigator.pushNamed(context, "/loginPage");
       },
     );
   }
