@@ -58,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     initializeControllers();
     super.initState();
+    // ignore: unused_element
     void showAllUsersData() async {
       final Map<String, String> allUsersData =
           await _userService.getAllUsersData();
@@ -77,179 +78,186 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          const GradientBackground(
-            children: [
-              Text(
-                AppStrings.signInToYourNAccount,
-                style: AppTheme.titleLarge,
-              ),
-              SizedBox(height: 6),
-              Text(AppStrings.signInToYourAccount, style: AppTheme.bodySmall),
-            ],
-          ),
-          Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  AppTextFormField(
-                    controller: emailController,
-                    labelText: AppStrings.email,
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    onChanged: (_) => _formKey.currentState?.validate(),
-                    validator: (value) {
-                      return value!.isEmpty
-                          ? AppStrings.pleaseEnterEmailAddress
-                          : AppConstants.emailRegex.hasMatch(value)
-                              ? null
-                              : AppStrings.invalidEmailAddress;
-                    },
-                  ),
-                  ValueListenableBuilder(
-                    valueListenable: passwordNotifier,
-                    builder: (_, passwordObscure, __) {
-                      return AppTextFormField(
-                        obscureText: passwordObscure,
-                        controller: passwordController,
-                        labelText: AppStrings.password,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.visiblePassword,
-                        onChanged: (_) => _formKey.currentState?.validate(),
-                        validator: (value) {
-                          return value!.isEmpty
-                              ? AppStrings.pleaseEnterPassword
-                              : AppConstants.passwordRegex.hasMatch(value)
-                                  ? null
-                                  : AppStrings.invalidPassword;
-                        },
-                        suffixIcon: IconButton(
-                          onPressed: () =>
-                              passwordNotifier.value = !passwordObscure,
-                          style: IconButton.styleFrom(
-                            minimumSize: const Size.square(48),
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const GradientBackground(
+              children: [
+                Text(
+                  AppStrings.signInToYourNAccount,
+                  style: AppTheme.titleLarge,
+                ),
+                SizedBox(height: 6),
+                Text(AppStrings.signInToYourAccount, style: AppTheme.bodySmall),
+              ],
+            ),
+            Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    AppTextFormField(
+                      key: const Key('email'),
+                      controller: emailController,
+                      labelText: AppStrings.email,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      onChanged: (_) => _formKey.currentState?.validate(),
+                      validator: (value) {
+                        return value!.isEmpty
+                            ? AppStrings.pleaseEnterEmailAddress
+                            : AppConstants.emailRegex.hasMatch(value)
+                                ? null
+                                : AppStrings.invalidEmailAddress;
+                      },
+                    ),
+                    ValueListenableBuilder(
+                      valueListenable: passwordNotifier,
+                      builder: (_, passwordObscure, __) {
+                        return AppTextFormField(
+                          key: const Key('password'),
+                          obscureText: passwordObscure,
+                          controller: passwordController,
+                          labelText: AppStrings.password,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.visiblePassword,
+                          onChanged: (_) => _formKey.currentState?.validate(),
+                          validator: (value) {
+                            return value!.isEmpty
+                                ? AppStrings.pleaseEnterPassword
+                                : AppConstants.passwordRegex.hasMatch(value)
+                                    ? null
+                                    : AppStrings.invalidPassword;
+                          },
+                          suffixIcon: IconButton(
+                            onPressed: () =>
+                                passwordNotifier.value = !passwordObscure,
+                            style: IconButton.styleFrom(
+                              minimumSize: const Size.square(48),
+                            ),
+                            icon: Icon(
+                              passwordObscure
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
                           ),
-                          icon: Icon(
-                            passwordObscure
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined,
-                            size: 20,
-                            color: Colors.black,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(AppStrings.forgotPassword),
-                  ),
-                  const SizedBox(height: 20),
-                  ValueListenableBuilder(
-                    valueListenable: fieldValidNotifier,
-                    builder: (_, isValid, __) {
-                      return FilledButton(
-                        onPressed: isValid
-                            ? () async {
-                                bool isExisting =
-                                    await _userService.isUserExists(
-                                  emailController.text,
-                                );
+                        );
+                      },
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(AppStrings.forgotPassword),
+                    ),
+                    const SizedBox(height: 20),
+                    ValueListenableBuilder(
+                      valueListenable: fieldValidNotifier,
+                      builder: (_, isValid, __) {
+                        return FilledButton(
+                          onPressed: isValid
+                              ? () async {
+                                  bool isExisting =
+                                      await _userService.isUserExists(
+                                    emailController.text,
+                                  );
 
-                                if (isExisting) {
-                                  bool isCorrect = await _userService.loginUser(
-                                      emailController.text,
-                                      passwordController.text);
-                                  if (isCorrect) {
-                                    SnackbarHelper.showSnackBar(
-                                      AppStrings.loggedIn,
-                                    );
-                                    Navigator.pushNamed(context, '/homePage');
-                                    emailController.clear();
-                                    passwordController.clear();
+                                  if (isExisting) {
+                                    bool isCorrect =
+                                        await _userService.loginUser(
+                                            emailController.text,
+                                            passwordController.text);
+                                    if (isCorrect) {
+                                      SnackbarHelper.showSnackBar(
+                                        AppStrings.loggedIn,
+                                      );
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pushNamed(context, '/homePage');
+                                      emailController.clear();
+                                      passwordController.clear();
+                                    } else {
+                                      SnackbarHelper.showSnackBar(
+                                        AppStrings.notExisting,
+                                      );
+                                    }
                                   } else {
                                     SnackbarHelper.showSnackBar(
                                       AppStrings.notExisting,
                                     );
                                   }
-                                } else {
-                                  SnackbarHelper.showSnackBar(
-                                    AppStrings.notExisting,
-                                  );
                                 }
-                              }
-                            : null,
-                        child: const Text(AppStrings.login),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(child: Divider(color: Colors.grey.shade200)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          AppStrings.orLoginWith,
-                          style: AppTheme.bodySmall.copyWith(
-                            color: Colors.black,
+                              : null,
+                          child: const Text(AppStrings.login),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(child: Divider(color: Colors.grey.shade200)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            AppStrings.orLoginWith,
+                            style: AppTheme.bodySmall.copyWith(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(child: Divider(color: Colors.grey.shade200)),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: SvgPicture.asset(Vectors.google, width: 14),
-                          label: const Text(
-                            AppStrings.google,
-                            style: TextStyle(color: Colors.black),
+                        Expanded(child: Divider(color: Colors.grey.shade200)),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(Vectors.google, width: 14),
+                            label: const Text(
+                              AppStrings.google,
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: SvgPicture.asset(Vectors.facebook, width: 14),
-                          label: const Text(
-                            AppStrings.facebook,
-                            style: TextStyle(color: Colors.black),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(Vectors.facebook, width: 14),
+                            label: const Text(
+                              AppStrings.facebook,
+                              style: TextStyle(color: Colors.black),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                AppStrings.doNotHaveAnAccount,
-                style: AppTheme.bodySmall.copyWith(color: Colors.black),
-              ),
-              const SizedBox(width: 4),
-              TextButton(
-                onPressed: () => Navigator.pushNamed(context, '/registerPage'),
-                child: const Text(AppStrings.register),
-              ),
-            ],
-          ),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppStrings.doNotHaveAnAccount,
+                  style: AppTheme.bodySmall.copyWith(color: Colors.black),
+                ),
+                const SizedBox(width: 4),
+                TextButton(
+                  onPressed: () =>
+                      Navigator.pushNamed(context, '/registerPage'),
+                  child: const Text(AppStrings.register),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
