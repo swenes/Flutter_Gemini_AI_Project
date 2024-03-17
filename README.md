@@ -1,4 +1,4 @@
-# err_detector_project
+# Flutter_Gemini_AI_Project
 
 A new Flutter project.
 
