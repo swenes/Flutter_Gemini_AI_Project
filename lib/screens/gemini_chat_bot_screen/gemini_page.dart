@@ -125,22 +125,24 @@ class _GeminiPageState extends State<GeminiPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: 120,
+                    key: const Key('start'),
+                    height: 140,
                     width: 220,
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.black, // Çizgi rengi
                         width: 0.2, // Çizgi kalınlığı
                       ),
-                      borderRadius: BorderRadius.circular(40),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     child: Image.asset(
-                      'assets/images/chat.png', // İstediğiniz bir resmin yolunu ekleyin
+                      scale: 12,
+                      'assets/images/chat2.png', // İstediğiniz bir resmin yolunu ekleyin
                     ),
                   ),
-                  const SizedBox(height: 16), // Biraz boşluk ekleyelim
+                  const SizedBox(height: 30), // Biraz boşluk ekleyelim
                   const Text(
-                    'Başlamak için bir mesaj gönder!',
+                    'Başlamak için bir mesaj gönder !',
                     style: TextStyle(
                         fontFamily: 'Cera-Pro',
                         fontSize: 15,

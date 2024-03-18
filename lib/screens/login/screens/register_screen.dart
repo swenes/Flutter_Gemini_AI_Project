@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             const GradientBackground(
               children: [
-                Text(AppStrings.register, style: AppTheme.titleLarge),
+                Text(AppStrings.register1, style: AppTheme.titleLarge),
                 SizedBox(height: 6),
                 Text(AppStrings.createYourAccount, style: AppTheme.bodySmall),
               ],
@@ -251,7 +251,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   }
                                 }
                               : null,
-                          child: const Text(AppStrings.register),
+                          child: const Text(AppStrings.register2),
                         );
                       },
                     ),

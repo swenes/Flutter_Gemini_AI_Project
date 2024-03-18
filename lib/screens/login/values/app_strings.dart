@@ -3,7 +3,8 @@ class AppStrings {
 
   static const String loginAndRegister = 'Login and Register UI';
   static const String uhOhPageNotFound = 'uh-oh!\nPage not found';
-  static const String register = 'Register';
+  static const String register1 = 'REGISTER';
+  static const String register2 = 'Register';
   static const String login = 'Login';
   static const String createYourAccount = 'Create your account';
   static const String doNotHaveAnAccount = "Don't have an account?";
