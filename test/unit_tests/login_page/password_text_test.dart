@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Password validation test', (WidgetTester tester) async {
+  testWidgets('Password Özel Karakterler İçermeli',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: LoginPage(),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Email validation test', (WidgetTester tester) async {
+  testWidgets('Email Doğrulanabilir Olmalı', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: LoginPage(),
@@ -13,7 +13,7 @@ void main() {
 
     // Boş bir e-posta girildiğinde doğrulama hatası oluşmalı
     await tester.tap(find.byKey(const Key('email'))); // E-posta alanına tıkla
-    await tester.pump(); // Yeniden oluşturulmayı bekleyin
+    await tester.pump(); // Yeniden oluşturulmayı bekle
 
     expect(find.text(AppStrings.email), findsOneWidget);
 

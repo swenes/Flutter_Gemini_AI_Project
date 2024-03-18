@@ -5,16 +5,16 @@ import 'package:err_detector_project/screens/login/components/app_text_form_fiel
 //  Bu birim test, AppTextFormField bileşeninin validator alanının doğru şekilde çalışıp çalışmadığını kontrol eder.
 
 // Test, önce AppTextFormField bileşenini ekrana yerleştirir (pumpWidget),
-//ardından TextFormField widget'ını bulur (find.byType) ve bu widget'ın validator fonksiyonunu alarak test eder.
+// ardından TextFormField widget'ını bulur (find.byType) ve bu widget'ın validator fonksiyonunu alarak test eder.
 
-//Validator fonksiyonu, değer boşsa "Please enter a value" mesajı döndürmelidir.
-//Bu nedenle, validator fonksiyonunu bir boş değerle çağırarak (.call('')) ve dönen sonucun beklendiği gibi "Please enter a value" olup olmadığını kontrol ediyoruz.
+// Validator fonksiyonu, değer boşsa "Please enter a value" mesajı döndürmelidir.
+// Bu nedenle, validator fonksiyonunu bir boş değerle çağırarak (.call('')) ve dönen sonucun beklendiği gibi "Please enter a value" olup olmadığını kontrol ediyoruz.
 
 // Daha sonra, aynı validator fonksiyonunu bir değerle ('Test') çağırarak, bu sefer dönen sonucun null olup olmadığını kontrol ediyoruz.
-//Çünkü bir değer verildiğinde doğru bir şekilde geçerli olmalı ve hiçbir hata mesajı döndürmemelidir.
+// Çünkü bir değer verildiğinde doğru bir şekilde geçerli olmalı ve hiçbir hata mesajı döndürmemelidir.
 
 // Bu test, AppTextFormField bileşeninin doğru şekilde çalışıp çalışmadığını doğrulamak için kullanılır.
-//Eğer validator alanı hatalı bir şekilde ayarlanmışsa veya çalışmıyorsa, bu test hata verecek ve problemin çözülmesine yardımcı olacaktır.
+// Eğer validator alanı hatalı bir şekilde ayarlanmışsa veya çalışmıyorsa, bu test hata verecek ve problemin çözülmesine yardımcı olacaktır.
 
 void main() {
   testWidgets('Test AppTextFormField validator', (WidgetTester tester) async {
